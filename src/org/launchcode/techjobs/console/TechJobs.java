@@ -2,6 +2,7 @@ package org.launchcode.techjobs.console;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -61,7 +62,8 @@ public class TechJobs {
                 String searchTerm = in.nextLine();
 
                 if (searchField.equals("all")) {
-                    System.out.println("Search all fields not yet implemented.");
+                    //This is where I want to add the findByValue(String value)
+                    printJobs(JobData.findByValue(searchTerm));
                 } else {
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
                 }
@@ -110,7 +112,24 @@ public class TechJobs {
 
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
+        //
+        if (someJobs.isEmpty()){
+            System.out.println("No results match the search term you entered.");
+        }
 
-        System.out.println("printJobs is not implemented yet");
+        // for each Job in JobData */
+        // for each column print ( (column name) + ":" + (content for column in this row)*/
+        //don't need else, because only runs FOR each job in someJobs!
+            for (HashMap job : someJobs) {
+            // followed Intellij's suggestion to use Map.forEach
+            // after attempting the below for (job.Entry<String, String> ....
+                job.forEach((key, value) -> System.out.println(key + ": " + value));
+                System.out.println("*****");
+            // the below did not work:
+            //for (job.Entry<String, String> a :someJobs.entrySet()){
+            //    System.out.println(a.getKey() + a.getValue(0));
+            //}
+            }
+        }
     }
-}
+

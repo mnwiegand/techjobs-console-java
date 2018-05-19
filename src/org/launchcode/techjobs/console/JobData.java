@@ -21,6 +21,8 @@ public class JobData {
 
     private static ArrayList<HashMap<String, String>> allJobs;
 
+
+
     /**
      * Fetch list of all values from loaded data,
      * without duplicates, for a given column.
@@ -55,6 +57,43 @@ public class JobData {
     }
 
     /**
+     * enable a search that looks for the search term in all of the columns
+     *
+     *
+     *
+     */
+    public static ArrayList<HashMap<String, String>> findByValue(String value) {
+        loadData();
+        // alljobs comes from loadData();
+
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+
+        //iterate across columns in a HashMap  row
+        for (HashMap<String, String> jobRow : allJobs) {
+            boolean check = false;
+
+            for (String jobValue : jobRow.values()){
+                String a = jobValue.toLowerCase();
+                String b = value.toLowerCase();
+                if (a.contains(b)){
+                    check = true;
+                }
+            }
+            if (check == true){
+                jobs.add(jobRow);
+                check = false;
+            }
+            //iterate across the row of the HashMap
+            //when a row's column's value is found to be equal to value
+            //    jobs.add(row);
+
+
+        }
+
+        return jobs;
+
+    }
+    /**
      * Returns results of search the jobs data by key/value, using
      * inclusion of the search term.
      *
@@ -75,8 +114,10 @@ public class JobData {
         for (HashMap<String, String> row : allJobs) {
 
             String aValue = row.get(column);
+            String a = aValue.toLowerCase();
+            String b = value.toLowerCase();
+            if (a.contains(b)){
 
-            if (aValue.contains(value)) {
                 jobs.add(row);
             }
         }
